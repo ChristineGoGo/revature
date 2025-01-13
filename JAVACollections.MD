@@ -121,6 +121,34 @@ Data Structure
                 - peek() - Inspects the element at the front of the queue without
                             removing it
         
+        PriorityQueue class
+            - Java PriorityQueue class is a queue  data structure implementation that
+            processes the queue items based on their priorities
+
+            Features
+                - PriorityQueue is an unbounded queue that grows dynamically
+                - It does not allow NULL objects
+                - It provides O(log(n)) time performance for add() and poll() methods
+                - Use Arrays.sort(pq.toArray()) if you need ordered traversal
+
+             Methods
+                - boolean add(object)
+                - boolean offer(object) - add specified element
+                - Object element() - retrieve the head of queue
+                - Object peek() - retrieves the head of the queue
+                - boolean remove(object)
+                - Object poll() - retrieves and removes the head of the queue
+                - void clear() - removes all of the elements from the queue
+                - Comparator comparator()
+                - boolean contains(Object o)
+                - Iterator iterator() - returns an iterator over the elements in this
+                                        queue
+                - int size()
+                - Object[] toArray() - returns an array containing all the elements in the
+                                        queue         
+
+        
+        
         Map Interface
             - Map cannot impelement the collection interface but it is still considered part
             of the Collection Framework.
@@ -152,24 +180,83 @@ Data Structure
                 - Use put() to add items to a HashMap or a HashTable
                 - Use remove() to remove the items
                 - Use get() to retrieve the items
+        ArrayList
+            - ArrayList is a data structure which contains an array within it,
+            but can resize dynamically
+        LinkedList
+            - It is a data structure that is internally composed of nodes that contain
+            data and references to the next node.
+            - Java's implementation of a LinkedList implements both the list interface and 
+            the Deque interface, it can act as both a list or a queue
+        
+        Vector
+            - Member of the collection class similar to an array
+        
+        Stack
+            - Represents a last-in-first-out(LIFO) stack oof objects
+            - It extends the Vector class
+            - Methods include:
+                - push()
+                    It inserts an item onto the top of the stack
+                - pop()
+                    Removes and object at the top of the stack and returns
+                    the same object
+        Iterators
+            - Iterable and Iterator Interface
+                - The Iterable interface defines a data structure which can be directly traversed using the
+                .iterator() method which returns an Iterator
+                - The Iterator interface contains methods for traversal including:
+                    - hasNext()
+                    - next()
+                    - remove()
+                - Any object which implements the Iterable interface can be iterated over using a special
+                kind of for loop, the enhanced for loop.
+                    List<String> names = new ArrayList<>();
+                    // add names....
+                    for (String name : names) {
+                        System.out.println(name);
+                    }
+                - The enhanced for loop does not track the index of iteration
 
-Iterators
-    - Iterable and Iterator Interface
-        - The Iterable interface defines a data structure which can be directly traversed using the
-        .iterator() method which returns an Iterator
-        - The Iterator interface contains methods for traversal including:
-            - hasNext()
-            - next()
-            - remove()
-        - Any object which implements the Iterable interface can be iterated over using a special
-        kind of for loop, the enhanced for loop.
-            List<String> names = new ArrayList<>();
-            // add names....
-            for (String name : names) {
-                System.out.println(name);
-            }
-        - The enhanced for loop does not track the index of iteration
+                - Iterable represents a collection that can be traversed
+                - Iterator() is an interface that allows us to iterate over some other object
+                    We use the hasNext() and next() methods in a while loop
 
-        - Iterable represents a collection that can be traversed
-        - Iterator() is an interface that allows us to iterate over some other object
-            We use the hasNext() and next() methods in a while loop
+        Comparable
+            - Comparable is an interface which defines the natural ordering for a class
+            - A class must implement Comparable if it is to sorted by the compareTo()
+            method
+
+            The compareTo() method returns an int which is:
+                - Zero if the two objects are equal
+                - Negative, if this object is smaller
+                - Positive if the object is greater than 
+            We can sort the elements of:
+                - String objects
+                - Wrapper class objects
+                - User-defines class objects
+        Comparator
+            - Comparator is an interface which allows you to define a total ordering on some collections of objects
+            - It is a member of the Java Collections Framework
+            - It is able to compare null values
+        
+        Factory
+            - It is a design pattern which creates object in which the precise type may not be known until runtime
+            - Situations where a factory may be useful include:
+                - Dependency injection framework
+                - Database access
+                - Logging frameworks
+                - GUI component creation in graphical user interface development
+Singleton Pattern
+    - A singleton is a design pattern which allows the creation of an object in memory only once in an application
+    and can be shared across multiple classes
+    - It has multiple usecases including:
+        - Logging
+        - Database Connections
+        - Caching
+        - Configuration Settings
+        - Thread Pool or Task Manager
+    - To make a class into a Singleton in Java:
+        - private static
+        - private
+        - public static getInstance()
