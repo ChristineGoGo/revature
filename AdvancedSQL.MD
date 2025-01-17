@@ -137,3 +137,14 @@ Reflection API
     if they are private or inaccessible through normal means
     - They are particularly useful for building generic code, implementing frameworks and writing debugging
     tools. The API can be found in the java.lang.reflect package 
+
+
+Threads
+    - A thread is a subset of a process that is also an independent sequence of execution
+    - At any given time, a thread can be in one of these states:
+        - New
+        - Runnable
+        - Blocked
+        - Waiting
+        - Timed waiting
+        - Terminated
