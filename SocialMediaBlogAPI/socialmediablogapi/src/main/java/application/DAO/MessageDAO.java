@@ -44,4 +44,107 @@ public class MessageDAO {
         return null;
     }
 
+    /**
+     * get message from database by the id of the message
+     * @param message_id
+     * @return Message from the message table with the given id 
+     */
+    public Message getMessageById(int message_id) {
+        Connection conn = ConnectionUtil.getConnection();
+        Message message = new Message();
+
+        try {
+            String sql = "SELECT * FROM message WHERE message_id = ?;";
+
+            
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setInt(1, message_id);
+            
+            ResultSet result = pst.executeQuery();
+
+            while (result.next()) {
+                message.setMessage_id(result.getInt("message_id"));
+                message.setMessage_text(result.getString("message_text"));
+                message.setPosted_by(result.getInt("posted_by"));
+                message.setTime_posted_epoch(result.getLong("time_posted_epoch"));
+            }
+            return message;
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
+
+    /**
+     * add a message to the message table by a specific user
+     * @param posted_by
+     * @param message object
+     * @return newly returned message
+     */
+    public Message addUserMessage(int posted_by, Message message) {
+        Connection conn = ConnectionUtil.getConnection();
+        Message newMessage = new Message();
+
+        try {
+            String sql = "INSERT INTO message (posted_by, message_text, time_posted_epoch) VALUES (?, ?, ?);";
+
+            PreparedStatement pst = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+
+            pst.setInt(1, posted_by);
+            pst.setString(2, message.getMessage_text());
+            pst.setLong(3, message.getTime_posted_epoch());
+
+            pst.executeUpdate();
+
+            ResultSet pKeyResultSet = pst.getGeneratedKeys();
+
+            if (pKeyResultSet.next()) {
+                int generated_message_id = (int) pKeyResultSet.getLong(1);
+                newMessage.setMessage_id(generated_message_id);
+                newMessage.setPosted_by(posted_by);
+                newMessage.setMessage_text(message.getMessage_text());
+                newMessage.setTime_posted_epoch(message.getTime_posted_epoch());
+                return newMessage;
+            }
+            
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
+
+    /**
+     * update a message in the message table using the message id
+     * @param message_id
+     * @param message
+     */
+    public void updateMessageById(int message_id, Message message) {
+        Connection conn = ConnectionUtil.getConnection();
+        try {
+            String sql = "UPDATE TABLE message SET posted_by = ?, message_text = ?, time_posted_epoch = ? WHERE message_id = message_id;";
+
+
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setInt(1, message.getPosted_by());
+            pst.setString(2, message.getMessage_text());
+            pst.setLong(3, message.getTime_posted_epoch());
+            pst.setInt(4, message_id);
+
+            pst.executeUpdate();
+
+        } catch(SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    /**
+     * delete a message from the message table by its id
+     * @param message_id
+     */
+    public void deleteMessageById(int message_id) {
+        Connection conn = ConnectionUtil.getConnection();
+        String sql
+    }
 }
