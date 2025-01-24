@@ -57,7 +57,7 @@ ACID
 
 Aggregate Functions
     - Aggregate functions in MySQL provide the output as a single value after
-    performing different opperations on a set if values
+    performing different opperations on a set of values
     - The 5 commonly used aggregate functions are as follows:
         Aggregate Function                          Description
         count()                                     Returns the number of rows, including NULL
@@ -133,7 +133,7 @@ Stream API
 Reflection API
     - Reflection in Java is a feature that allows a program to examine and manipulate its own structure,
     behavior and metadata at runtime
-    - It provides a way to inspect and modify classes, iterfaces, fields, methods and consturctors, even
+    - It provides a way to inspect and modify classes, iterfaces, fields, methods and constuctors, even
     if they are private or inaccessible through normal means
     - They are particularly useful for building generic code, implementing frameworks and writing debugging
     tools. The API can be found in the java.lang.reflect package 
