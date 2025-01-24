@@ -1,0 +1,5 @@
+application/Model/Message.class
+application/Model/Account.class
+application/DAO/MessageDAO.class
+application/App.class
+application/Util/ConnectionUtil.class
