@@ -78,7 +78,6 @@ public class MessageDAO {
 
     /**
      * add a message to the message table
-     * @param posted_by
      * @param message object
      * @return newly returned message
      */
@@ -102,7 +101,7 @@ public class MessageDAO {
             if (pKeyResultSet.next()) {
                 int generated_message_id = (int) pKeyResultSet.getLong(1);
                 newMessage.setMessage_id(generated_message_id);
-                newMessage.setPosted_by(posted_by);
+                newMessage.setPosted_by(message.getPosted_by());
                 newMessage.setMessage_text(message.getMessage_text());
                 newMessage.setTime_posted_epoch(message.getTime_posted_epoch());
                 return newMessage;
