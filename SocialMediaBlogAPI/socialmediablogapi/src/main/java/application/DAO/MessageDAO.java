@@ -77,12 +77,12 @@ public class MessageDAO {
     }
 
     /**
-     * add a message to the message table by a specific user
+     * add a message to the message table
      * @param posted_by
      * @param message object
      * @return newly returned message
      */
-    public Message addUserMessage(int posted_by, Message message) {
+    public Message addMessage(Message message) {
         Connection conn = ConnectionUtil.getConnection();
         Message newMessage = new Message();
 
@@ -91,7 +91,7 @@ public class MessageDAO {
 
             PreparedStatement pst = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
 
-            pst.setInt(1, posted_by);
+            pst.setInt(1, message.getPosted_by());
             pst.setString(2, message.getMessage_text());
             pst.setLong(3, message.getTime_posted_epoch());
 
