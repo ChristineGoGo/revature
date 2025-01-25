@@ -145,6 +145,48 @@ public class MessageDAO {
      */
     public void deleteMessageById(int message_id) {
         Connection conn = ConnectionUtil.getConnection();
-        String sql
+        try {
+            String sql = "DELETE FROM message WHERE message_id = ?;";
+            
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setInt(1, message_id);
+
+            pst.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    /**
+     * retrieve a message given the user id
+     * @param posted_by
+     * @return message
+     */
+
+    public List<Message> getMessageByUser(int posted_by) {
+        Connection conn = ConnectionUtil.getConnection();
+        List<Message> messages = new ArrayList<>();
+
+        try {
+            String sql = "SELECT * FROM message WHERE posted_by = ?;";
+
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setInt(1, posted_by);
+
+            ResultSet rst = pst.executeQuery();
+
+            while (rst.next()) {
+                Message message = new Message();
+                message.setMessage_id(rst.getInt("message_id"));
+                message.setPosted_by(rst.getInt("posted_by"));
+                message.setMessage_text(rst.getString("message_text"));
+                message.setTime_posted_epoch(rst.getLong("time_posted_epoch"));
+                messages.add(message);
+            }
+            return messages;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
     }
 }
