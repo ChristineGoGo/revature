@@ -45,7 +45,7 @@ public class AccountService {
      * @param account
      * @return account
      */
-    public Account getAccount(Account account, String username,String password) {
+    public Account getAccount(String username,String password) {
         Account matchedAccount = accountDAO.geAccount(username, password);
         if (matchedAccount.getAccount_id() > 0) {
             return matchedAccount;
