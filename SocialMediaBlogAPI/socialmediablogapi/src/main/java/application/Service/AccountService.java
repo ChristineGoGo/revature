@@ -37,15 +37,20 @@ public class AccountService {
         }
         return null;
     }
-
-
+    
     /**
-     * use the accountDAO to get a user by their id
-     * @param account_id
+     * use accountDAO to verify a user/login
+     * @param username
+     * @param password
+     * @param account
+     * @return account
      */
-    
-
-
-    
+    public Account getAccount(Account account, String username,String password) {
+        Account matchedAccount = accountDAO.geAccount(username, password);
+        if (matchedAccount.getAccount_id() > 0) {
+            return matchedAccount;
+        }
+        return null;
+    }
 
 }

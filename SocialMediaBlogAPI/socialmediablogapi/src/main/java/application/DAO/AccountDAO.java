@@ -151,4 +151,35 @@ public class AccountDAO {
         return null;
     }
 
+    /**
+     * access the user account with the username and password
+     * @param username
+     * @param password
+     * @return account
+     */
+    public Account geAccount(String username, String password) {
+        Connection conn = ConnectionUtil.getConnection();
+        Account newAccount = new Account();
+        try {
+            String sql = "SELECT * FROM account WHERE username = ? AND password = ?;";
+
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setString(1, username);
+            pst.setString(1, password);
+
+            ResultSet result = pst.executeQuery();
+            
+            while (result.next()) {
+                newAccount.setAccount_id(result.getInt("account_id"));
+                newAccount.setUsername(result.getString("username"));
+                newAccount.setPassword(result.getString("password"));
+            }
+            return newAccount;
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
+
 }
