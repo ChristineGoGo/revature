@@ -96,8 +96,14 @@ public class MessageService {
      * delete a message from the message table
      * @param message_id
      */
-    public void deleteMessage() {
-        
+    public Message deleteMessage(int message_id) {
+        Message message = messageDAO.getMessageById(message_id);
+        int receivedMessageId = message.getMessage_id();
+        if (receivedMessageId > 0) {
+            messageDAO.deleteMessageById(message_id);
+            return message;
+        }
+        return null;
     }
 
 
