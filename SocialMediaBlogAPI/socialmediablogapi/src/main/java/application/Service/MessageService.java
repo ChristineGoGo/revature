@@ -21,13 +21,15 @@ public class MessageService {
      */
     public MessageService() {
         messageDAO = new MessageDAO();
+        accountDAO = new AccountDAO();
     }
     /**
      * constructor for messageService when a messageDAO is provided
      * @param messageDAO;
      */
-    public MessageService(MessageDAO messageDAO) {
+    public MessageService(MessageDAO messageDAO, AccountDAO accountDAO) {
         this.messageDAO = messageDAO;
+        this.accountDAO = accountDAO;
     }
 
     /**
@@ -37,7 +39,8 @@ public class MessageService {
      */
     public Message addMessage(Message message) {
         Message newMessage = messageDAO.addMessage(message);
-        Integer generatedMessageId = newMessage.getMessage_id();
+        Integer generatedMessageId = newMessage == null ? 0 : newMessage.getMessage_id();
+        
         if (generatedMessageId > 0) {
             return newMessage;
         }
@@ -49,10 +52,10 @@ public class MessageService {
      * @param message_id
      * @return message
      */
-    public Message updateMessage(int message_id, Message message) {
+    public Message updateMessage(int message_id, String message_text) {
         Message messageToUpdate = messageDAO.getMessageById(message_id);
         if (!(messageToUpdate == null)) {
-            messageDAO.updateMessageById(message_id, message);
+            return messageDAO.updateMessageById(message_id, message_text);
         }
         return null;
 
@@ -86,7 +89,8 @@ public class MessageService {
      */
     public List<Message> getMessagesByUser(int posted_by) {
         Account user = accountDAO.getAccountById(posted_by);
-        if (user.getAccount_id() > 0) {
+
+        if (!(user == null)) {
             return messageDAO.getMessageByUser(posted_by);
         }
         return null;
@@ -99,9 +103,9 @@ public class MessageService {
     public Message deleteMessage(int message_id) {
         Message message = messageDAO.getMessageById(message_id);
         int receivedMessageId = message.getMessage_id();
+        
         if (receivedMessageId > 0) {
-            messageDAO.deleteMessageById(message_id);
-            return message;
+            return messageDAO.deleteMessageById(message_id);
         }
         return null;
     }

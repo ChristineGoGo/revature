@@ -7,11 +7,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import application.Model.Account;
 import application.Model.Message;
 import application.Util.ConnectionUtil;
 
 
 public class MessageDAO {
+
     /**
      * retrieve all messages from the message table
      * @return all messages
@@ -84,9 +86,15 @@ public class MessageDAO {
     public Message addMessage(Message message) {
         Connection conn = ConnectionUtil.getConnection();
         Message newMessage = new Message();
+        AccountDAO accountDAO = new AccountDAO();
 
         String message_text = message.getMessage_text();
-        if (message_text.length() <= 0) {
+        int posted_by = message.getPosted_by();
+        Account userAccount = accountDAO.getAccountById(posted_by);
+
+        // System.out.println("User account is: " + userAccount);
+        // System.out.println("User posted_by is: " + posted_by);
+        if ((message_text.length() <= 0) || (userAccount == null)) {
             return null;
         }
 
@@ -124,31 +132,39 @@ public class MessageDAO {
      * @param message_id
      * @param message
      */
-    public void updateMessageById(int message_id, Message message) {
+    public Message updateMessageById(int message_id, String message_text) {
         Connection conn = ConnectionUtil.getConnection();
+        Message message = getMessageById(message_id);
+        if ((message == null) || (message_text.length() == 0) || (message_text.length() > 255) ) {
+            return null;
+        }
+            
+        
         try {
-            String sql = "UPDATE TABLE message SET posted_by = ?, message_text = ?, time_posted_epoch = ? WHERE message_id = message_id;";
+            String sql = "UPDATE message SET message_text = ? WHERE message_id = ?;";
 
 
             PreparedStatement pst = conn.prepareStatement(sql);
-            pst.setInt(1, message.getPosted_by());
-            pst.setString(2, message.getMessage_text());
-            pst.setLong(3, message.getTime_posted_epoch());
-            pst.setInt(4, message_id);
+            pst.setString(1, message_text);
+            pst.setInt(2, message_id);
 
             pst.executeUpdate();
+            return getMessageById(message_id);
 
         } catch(SQLException e) {
             System.out.println(e.getMessage());
         }
+        return null;
     }
 
     /**
      * delete a message from the message table by its id
      * @param message_id
      */
-    public void deleteMessageById(int message_id) {
+    public Message deleteMessageById(int message_id) {
         Connection conn = ConnectionUtil.getConnection();
+        Message message = getMessageById(message_id);
+
         try {
             String sql = "DELETE FROM message WHERE message_id = ?;";
             
@@ -156,9 +172,11 @@ public class MessageDAO {
             pst.setInt(1, message_id);
 
             pst.executeUpdate();
+            return message;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+        return null;
     }
 
     /**

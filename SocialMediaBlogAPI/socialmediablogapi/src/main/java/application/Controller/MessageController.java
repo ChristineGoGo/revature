@@ -56,9 +56,12 @@ public class MessageController {
      */
     private void updateMessageHandler(Context ctx) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
-        Message message = mapper.readValue(ctx.body(), Message.class);
+        // Message message = mapper.readValue(ctx.body(), Message.class);
+        // int message_id = Integer.parseInt(ctx.pathParam("message_id"));
+        // Message messageToUpdate = messageService.updateMessage(message_id, message);
         int message_id = Integer.parseInt(ctx.pathParam("message_id"));
-        Message messageToUpdate = messageService.updateMessage(message_id, message);
+        String message_text = ctx.pathParam("message_text");
+        Message messageToUpdate = messageService.updateMessage(message_id, message_text);
 
         if (messageToUpdate == null) {
             ctx.status(400);        

@@ -56,14 +56,29 @@ public class AccountDAO {
             String sql = "SELECT * FROM account WHERE account_id = ?;";
 
             PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setInt(1, account_id);
+
             ResultSet rst = pst.executeQuery();
 
+            // if (rst.next()) {
+            //     int foundAccountId = rst.getInt("account_id");
+        
+                // if (foundAccountId > 0) {
             while (rst.next()) { 
+                // System.out.println("found account!");
+                // account.setUsername(rst.getString("username"));
+                // account.setPassword(rst.getString("password"));
                 account.setAccount_id(rst.getInt("account_id"));
                 account.setUsername(rst.getString("username"));
                 account.setPassword(rst.getString("password"));
+                return account;
             }
-            return account;
+                    
+                    
+                // }
+            // }
+
+         
         } catch(SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -89,14 +104,14 @@ public class AccountDAO {
 
             if (result.next()) {
                 String userExists = result.getString("username");
-                System.out.println("Username is: ");
+                // System.out.println("Username is: ");
                 if (!(userExists == null) ) {
                     while (result.next()) {
                         accountFound.setAccount_id(result.getInt("account_id"));
                         accountFound.setUsername(result.getString("username"));
                         accountFound.setPassword(result.getString("password"));
                     }
-                    System.out.println("Account exists for user:");
+                    // System.out.println("Account exists for user:");
                     return accountFound;
                 }
             }
@@ -123,7 +138,7 @@ public class AccountDAO {
         Account newAccount = new Account();
 
         if ((pass.length() < 4) || (username.length() < 1)) {
-            System.out.println("enter valid password and username!");
+            // System.out.println("enter valid password and username!");
             return null;
         }
 

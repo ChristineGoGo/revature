@@ -1,6 +1,8 @@
 package application.Controller;
 
 
+import java.util.List;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -35,11 +37,11 @@ public class SocialMediaController {
     public Javalin startAPI () {
         Javalin app = Javalin.create();
         app.post("/messages", this::postMessageHandler);
-        app.put("/messages/{message_id}", this::updateMessageHandler);
+        app.patch("/messages/{message_id}", this::updateMessageHandler);
         app.get("/messages/", this::getMessagesHandler);
         app.get("/messages/{message_id}", this::getMessageByIdHandler);
         app.delete("messages/{message_id}", this::deleteMessageHandler);
-        app.get("messages/user/{user_id}", this::getAllMessagesByUserHandler);
+        app.get("/accounts/{account_id}", this::getAllMessagesByUserHandler);
         app.post("/register", this::addUserHandler);
         app.post("/login", this::loginHandler);
 
@@ -54,11 +56,9 @@ public class SocialMediaController {
     private void postMessageHandler(Context ctx) throws  JsonProcessingException{
         ObjectMapper mapper = new ObjectMapper();
         Message message = mapper.readValue(ctx.body(), Message.class);
-        int account_id = message.getPosted_by();
-        Account account = accountService.getAccountById(account_id);
-
-        if (!(account == null)) {
-            Message addedMessage = messageService.addMessage(message);
+        Message addedMessage = messageService.addMessage(message);
+        
+        if (!(addedMessage == null)) {
             ctx.json(mapper.writeValueAsString(addedMessage));
         } else {
             ctx.status(400);
@@ -75,9 +75,10 @@ public class SocialMediaController {
         ObjectMapper mapper = new ObjectMapper();
         Message message = mapper.readValue(ctx.body(), Message.class);
         int message_id = Integer.parseInt(ctx.pathParam("message_id"));
-        Message messageToUpdate = messageService.updateMessage(message_id, message);
+        String message_text = message.getMessage_text();
+        Message messageToUpdate = messageService.updateMessage(message_id, message_text);
 
-        if (messageToUpdate == null) {
+        if ((messageToUpdate == null) || (message_id == 0)) {
             ctx.status(400);        
         } else {
             ctx.json(mapper.writeValueAsString(messageToUpdate));
@@ -98,12 +99,17 @@ public class SocialMediaController {
      * @throws JSONProcessingException
      */
     private void getMessageByIdHandler(Context ctx) throws JsonProcessingException {
+      
         int message_id = Integer.parseInt(ctx.pathParam("message_id"));
+        Message message = messageService.getMessagesById(message_id);
 
-        if (message_id > 0 ) {
-            ctx.json(messageService.getMessagesById(message_id));
+        if (message == null) {
+            ctx.status(200);
         } else {
-            ctx.status(400);
+            // ctx.json(messageService.getMessagesById(message_id));
+            ctx.json(message);
+            ctx.status(200);
+
         }
     }
 
@@ -113,10 +119,12 @@ public class SocialMediaController {
      */
     private void deleteMessageHandler(Context ctx) {
         int message_id = Integer.parseInt(ctx.pathParam("message_id"));
-        if (message_id > 0) {
-            messageService.deleteMessage(message_id);
+        Message deletedMessage = messageService.deleteMessage(message_id);
+
+        if (deletedMessage == null) {
+            ctx.status(200);
         } else {
-            ctx.status(400);
+            ctx.json(deletedMessage);
         }
     }
 
@@ -126,8 +134,15 @@ public class SocialMediaController {
      * @throws JSONProcessingException
      */
     private void getAllMessagesByUserHandler(Context ctx) {
-        int posted_by = Integer.parseInt(ctx.pathParam("posted_by"));
-        ctx.json(messageService.getMessagesByUser(posted_by));
+        int posted_by = Integer.parseInt(ctx.pathParam("account_id"));
+        List <Message> messages = messageService.getMessagesByUser(posted_by);
+        // System.out.println("The messages are: " + messages);
+
+        if (!(messages == null)) {
+            ctx.json(messages);
+        }
+        ctx.status(200);
+        
     }
 
 
