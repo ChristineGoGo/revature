@@ -2,7 +2,6 @@ package application.Controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.cfg.MapperBuilder;
 
 import application.Model.Account;
 import application.Service.AccountService;
@@ -30,7 +29,7 @@ public class AccountController {
     public Javalin startApi() {
         Javalin app = Javalin.create();
         app.post("/register", this::addUserHandler);
-        app.get("/login", this::loginHandler)
+        app.post("/login", this::loginHandler);
         return app;
     }
 

@@ -1,21 +1,32 @@
 package application.Controller;
 
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import application.Model.Account;
 import application.Model.Message;
+import application.Service.AccountService;
 import application.Service.MessageService;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 
+public class SocialMediaController {
+    /**
+     * used to access the database through the messageService
+     */
 
-public class MessageController {
     MessageService messageService;
+    /**
+     * used to access the database through the accountService
+     */
+   AccountService accountService;
 
 
-    /** initialize the controller with the message Service */
-    public MessageController() {
+    /** initialize the controller with the messageService and accountService */
+    public SocialMediaController() {
         messageService = new MessageService();
+        accountService = new AccountService();
     }
 
     /**
@@ -29,6 +40,8 @@ public class MessageController {
         app.get("/messages/{message_id}", this::getMessageByIdHandler);
         app.delete("messages/{message_id}", this::deleteMessageHandler);
         app.get("messages/user/{user_id}", this::getAllMessagesByUserHandler);
+        app.post("/register", this::addUserHandler);
+        app.post("/login", this::loginHandler);
 
         return app;
     }
@@ -112,5 +125,49 @@ public class MessageController {
         int posted_by = Integer.parseInt(ctx.pathParam("posted_by"));
         ctx.json(messageService.getMessagesByUser(posted_by));
     }
+
+
+    /**
+     * handler to verify user in db and facilitate login
+     * @param ctx
+     * @throws JsonProcessingException
+     */
+    private void loginHandler(Context ctx) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        Account account = mapper.readValue(ctx.body(), Account.class);
+        // String username = ctx.pathParam("username");
+        // String password = ctx.pathParam("password");
+        System.out.println("account generated username is: " + account.getUsername());
+        Account userAccount = accountService.getAccount(account.getUsername(), account.getPassword());
+
+        if (userAccount.getAccount_id() > 0) {
+            ctx.status(200);
+            ctx.json(mapper.writeValueAsString(userAccount));
+        } else {
+            ctx.status(400);
+        }
+
+    }
+
+
+    /**
+     * handler to add a new user to the database
+     * @param  ctx
+     * @throws JsonProcessingException
+     * 
+     */
+    private void addUserHandler(Context ctx) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        Account account = mapper.readValue(ctx.body(), Account.class);
+        Account addedAccount = accountService.addAccount(account);
+
+        if (addedAccount == null) {
+            ctx.status(400);
+        } else {
+            ctx.status(200);
+            ctx.json(mapper.writeValueAsString(addedAccount));
+        }
+    }
+
 
 }

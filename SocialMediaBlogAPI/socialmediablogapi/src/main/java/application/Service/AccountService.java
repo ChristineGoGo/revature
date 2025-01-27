@@ -30,9 +30,9 @@ public class AccountService {
      */
     public Account addAccount(Account account) {
         Account newAccount = accountDAO.addAccount(account);
-        Integer generatedAccountId = newAccount.getAccount_id();
+        Integer generatedAccountId = newAccount == null ? 0 : newAccount.getAccount_id();
 
-        if (generatedAccountId > 1) {
+        if (generatedAccountId > 0) {
             return newAccount;
         }
         return null;
@@ -46,8 +46,9 @@ public class AccountService {
      * @return account
      */
     public Account getAccount(String username,String password) {
-        Account matchedAccount = accountDAO.geAccount(username, password);
-        if (matchedAccount.getAccount_id() > 0) {
+        Account matchedAccount = accountDAO.getAccount(username, password);
+        int account_id = matchedAccount == null ? 0 : matchedAccount.getAccount_id();
+        if (account_id > 0) {
             return matchedAccount;
         }
         return null;

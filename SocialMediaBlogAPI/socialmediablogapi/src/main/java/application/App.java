@@ -1,9 +1,6 @@
 package application;
-import java.sql.Connection;
-
-import application.DAO.MessageDAO;
-import application.Util.ConnectionUtil;
-
+import application.Controller.SocialMediaController;
+import io.javalin.Javalin;
 /**
  * Hello world!
  *
@@ -12,8 +9,13 @@ public class App
 {
     public static void main( String[] args )
     {
-        Connection conn = ConnectionUtil.getConnection();
-        MessageDAO messageDao = new MessageDAO();
-        System.out.println(messageDao.getAllMessages());
+        // Account account = new Account("test1", "password123");
+        // AccountDAO acct = new AccountDAO();
+
+        // System.out.println(acct.addAccount(account));
+        SocialMediaController sc = new SocialMediaController();
+        Javalin app = sc.startAPI();
+        app.start(6000);
+        
     }
 }

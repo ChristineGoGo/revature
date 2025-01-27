@@ -1,5 +1,11 @@
 application/Model/Message.class
 application/Model/Account.class
+application/Controller/AccountController.class
+application/Service/AccountService.class
+application/Controller/MessageController.class
+application/Service/MessageService.class
 application/DAO/MessageDAO.class
 application/App.class
+application/Controller/SocialMediaController.class
 application/Util/ConnectionUtil.class
+application/DAO/AccountDAO.class

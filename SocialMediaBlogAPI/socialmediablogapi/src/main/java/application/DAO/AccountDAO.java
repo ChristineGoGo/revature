@@ -75,29 +75,36 @@ public class AccountDAO {
      * @param account
      * @return account if exists otheriwse null
      */
-    public Account checkAccount(Account account) {
+    public Account checkAccountUser(String username) {
         Connection conn = ConnectionUtil.getConnection();
         Account accountFound = new Account();
-        int account_id = account.getAccount_id();
 
         try {
-            String sql = "SELECT * FROM account WHERE account_id = ?;";
+            String sql = "SELECT * FROM account WHERE username = ?;";
             PreparedStatement pst = conn.prepareStatement(sql);
             
-            pst.setInt(1, account_id);
+            pst.setString(1, username);
 
             ResultSet result = pst.executeQuery();
 
-            while (result.next()) {
-                accountFound.setAccount_id(result.getInt("account_id"));
-                accountFound.setUsername(result.getString("username"));
-                accountFound.setPassword(result.getString("password"));
+            if (result.next()) {
+                String userExists = result.getString("username");
+                System.out.println("Username is: ");
+                if (!(userExists == null) ) {
+                    while (result.next()) {
+                        accountFound.setAccount_id(result.getInt("account_id"));
+                        accountFound.setUsername(result.getString("username"));
+                        accountFound.setPassword(result.getString("password"));
+                    }
+                    System.out.println("Account exists for user:");
+                    return accountFound;
+                }
             }
-            return accountFound;
+  
         } catch (SQLException e) {
-             System.out.println(e.getMessage());
+            System.out.println(e.getMessage());
         }
-        return null;
+        return null;     
     }
 
     /**
@@ -111,11 +118,12 @@ public class AccountDAO {
      */
     public Account addAccount(Account account) {
         String pass = account.getPassword();
-        Account existingAccount = checkAccount(account);
+        String username = account.getUsername();
+        Account existingAccount = checkAccountUser(username);
         Account newAccount = new Account();
 
-        if (pass.length() < 4) {
-            System.out.println("enter valid password!");
+        if ((pass.length() < 4) || (username.length() < 1)) {
+            System.out.println("enter valid password and username!");
             return null;
         }
 
@@ -145,7 +153,7 @@ public class AccountDAO {
             }
 
         } else {
-            System.out.println("Account exists!");
+            System.out.println("Account already exists!");
         }
         
         return null;
@@ -157,7 +165,7 @@ public class AccountDAO {
      * @param password
      * @return account
      */
-    public Account geAccount(String username, String password) {
+    public Account getAccount(String username, String password) {
         Connection conn = ConnectionUtil.getConnection();
         Account newAccount = new Account();
         try {
@@ -165,7 +173,7 @@ public class AccountDAO {
 
             PreparedStatement pst = conn.prepareStatement(sql);
             pst.setString(1, username);
-            pst.setString(1, password);
+            pst.setString(2, password);
 
             ResultSet result = pst.executeQuery();
             

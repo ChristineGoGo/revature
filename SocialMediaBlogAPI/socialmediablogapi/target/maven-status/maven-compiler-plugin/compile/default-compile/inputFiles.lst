@@ -1,3 +1,11 @@
 /Users/chrissy/coding/revature/SocialMediaBlogAPI/socialmediablogapi/src/main/java/application/Model/Account.java
+/Users/chrissy/coding/revature/SocialMediaBlogAPI/socialmediablogapi/src/main/java/application/Controller/AccountController.java
+/Users/chrissy/coding/revature/SocialMediaBlogAPI/socialmediablogapi/src/main/java/application/Model/Message.java
 /Users/chrissy/coding/revature/SocialMediaBlogAPI/socialmediablogapi/src/main/java/application/Util/ConnectionUtil.java
+/Users/chrissy/coding/revature/SocialMediaBlogAPI/socialmediablogapi/src/main/java/application/DAO/MessageDAO.java
 /Users/chrissy/coding/revature/SocialMediaBlogAPI/socialmediablogapi/src/main/java/application/App.java
+/Users/chrissy/coding/revature/SocialMediaBlogAPI/socialmediablogapi/src/main/java/application/Service/AccountService.java
+/Users/chrissy/coding/revature/SocialMediaBlogAPI/socialmediablogapi/src/main/java/application/Controller/MessageController.java
+/Users/chrissy/coding/revature/SocialMediaBlogAPI/socialmediablogapi/src/main/java/application/Controller/SocialMediaController.java
+/Users/chrissy/coding/revature/SocialMediaBlogAPI/socialmediablogapi/src/main/java/application/DAO/AccountDAO.java
+/Users/chrissy/coding/revature/SocialMediaBlogAPI/socialmediablogapi/src/main/java/application/Service/MessageService.java
