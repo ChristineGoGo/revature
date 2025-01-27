@@ -54,12 +54,16 @@ public class SocialMediaController {
     private void postMessageHandler(Context ctx) throws  JsonProcessingException{
         ObjectMapper mapper = new ObjectMapper();
         Message message = mapper.readValue(ctx.body(), Message.class);
-        Message addedMessage = messageService.addMessage(message);
-        if (addedMessage == null) {
-            ctx.status(400);
-        } else {
+        int account_id = message.getPosted_by();
+        Account account = accountService.getAccountById(account_id);
+
+        if (!(account == null)) {
+            Message addedMessage = messageService.addMessage(message);
             ctx.json(mapper.writeValueAsString(addedMessage));
+        } else {
+            ctx.status(400);
         }
+            
     }
 
     /**
@@ -137,14 +141,15 @@ public class SocialMediaController {
         Account account = mapper.readValue(ctx.body(), Account.class);
         // String username = ctx.pathParam("username");
         // String password = ctx.pathParam("password");
-        System.out.println("account generated username is: " + account.getUsername());
+        // System.out.println("account generated username is: " + account.getUsername());
         Account userAccount = accountService.getAccount(account.getUsername(), account.getPassword());
+        int account_id = userAccount == null ? 0 : userAccount.getAccount_id();
 
-        if (userAccount.getAccount_id() > 0) {
+        if (account_id > 0) {
             ctx.status(200);
             ctx.json(mapper.writeValueAsString(userAccount));
         } else {
-            ctx.status(400);
+            ctx.status(401);
         }
 
     }

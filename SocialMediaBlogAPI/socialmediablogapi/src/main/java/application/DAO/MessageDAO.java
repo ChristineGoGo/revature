@@ -85,6 +85,11 @@ public class MessageDAO {
         Connection conn = ConnectionUtil.getConnection();
         Message newMessage = new Message();
 
+        String message_text = message.getMessage_text();
+        if (message_text.length() <= 0) {
+            return null;
+        }
+
         try {
             String sql = "INSERT INTO message (posted_by, message_text, time_posted_epoch) VALUES (?, ?, ?);";
 

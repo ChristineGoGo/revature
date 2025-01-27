@@ -54,4 +54,18 @@ public class AccountService {
         return null;
     }
 
+    /**
+     * obtain an account using its account_id through the AccountDAO
+     * @param account_id
+     * @return account 
+     */
+    public Account getAccountById(int account_id) {
+        Account matchedAccount = accountDAO.getAccountById(account_id);
+        int matchedAccountId = matchedAccount == null ? 0 : matchedAccount.getAccount_id();
+        if (matchedAccountId > 0) {
+            return matchedAccount;
+        }
+        return null;
+    }
+
 }
