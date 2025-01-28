@@ -3,10 +3,10 @@ Two types of memory in JAVA:
      - Used to store local variables
      - Stores the value of a primitive variable
      - Methods, flow control
-     - Stores references fore primitive and reference variables
+     - Stores references for primitive and reference variables
      - Faster access of data
      - Fixed size for a program
-     - Data is store in an a last-in-first-out order
+     - Data is store in a last-in-first-out order
 
     Heap memory
         - Use to store larger allocations of memory(larger objects)
@@ -21,12 +21,12 @@ Data Structure
         - In arrays
         - With nodes
     Array Based Data Structure                                  Node-Based Data Structure
-        - Default Datatype(built-in)                            - Custom-made, though many are provided in JAVA API
-        - Supports Random Access                                - Supports different ways to store data(list vs queue vs set)
+        - Default Datatype(built-in)                            - Custom-made, though many are provided in Java API
+        - Supports Random Access                                - Supports different ways to store data        
         - Fixed(non-changing) size                              - Dynamic (changeable) size
         - Immediate access to any index                         - Iteration through traversal of collection
         - Iteration uses indexes                                - Custom iteration must be defined
-        - Inserting data may require                            - Easier to insert data in the middle of the collection
+        - Inserting data may require                            - Easier to insert data in the middle of collection
         updating multiple proceeding indexes 
     
     Collections Framework
@@ -36,7 +36,7 @@ Data Structure
             - List - an ordered collection
             - Set - a collection that does not contain duplicates
             - Queue - a collection that operates on a first-in-first-out(FIFO) basis
-            - Map - contains key/value pairs.Does not exten Iterable
+            - Map - contains key/value pairs.Does not extend Iterable
         - The Map interface does not extend the Collection interface.
         - Collection interface extends the Iterable interface
         - Iterable interface has only one method called the iterator.
@@ -48,11 +48,11 @@ Data Structure
             - add()
                 - It is used to add an element in the collection.
             - addAll()
-                - It adds a collection of elemtns to the collection.
+                - It adds a collection of elemetns to the collection.
             -clear()
                 - this method clears or removes all the elements from the collection.
             - contains()
-                - this method checks whethher an element is present or not in a collection.
+                - this method checks whether an element is present or not in a collection.
             - containsAll()
                 - this methos checks whether a specified collection of elements is present or not.
             - equals()
@@ -99,7 +99,7 @@ Data Structure
                 - Allows fast insertion and traversal
                 - Does not maintain order in which you insert elements
             - TreeSet
-            - Type of Set whose lements maintain a sorted order when inserted.
+            - Type of Set whose elements maintain a sorted order when inserted.
             It is backed by a Sorted Tree. It cannot contain a null value.
 
             - The methods declared by a Set are summarized as follows:
@@ -150,9 +150,9 @@ Data Structure
         
         
         Map Interface
-            - Map cannot impelement the collection interface but it is still considered part
+            - Map cannot impelement the Collection interface but it is still considered part
             of the Collection Framework.
-            - Map cannot be iterated over driectly. One must either use:
+            - Map cannot be iterated over directly. One must either use:
                 - entrySet()
                     Method to iterate over the set of Map.Entry
                 - keySet()
@@ -193,7 +193,7 @@ Data Structure
             - Member of the collection class similar to an array
         
         Stack
-            - Represents a last-in-first-out(LIFO) stack oof objects
+            - Represents a last-in-first-out(LIFO) stack of objects
             - It extends the Vector class
             - Methods include:
                 - push()
@@ -224,7 +224,7 @@ Data Structure
 
         Comparable
             - Comparable is an interface which defines the natural ordering for a class
-            - A class must implement Comparable if it is to sorted by the compareTo()
+            - A class must implement Comparable if it is to be sorted by the compareTo()
             method
 
             The compareTo() method returns an int which is:

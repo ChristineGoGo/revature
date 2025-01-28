@@ -1,8 +1,6 @@
 package application.Controller;
 
 
-import java.util.List;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -41,7 +39,7 @@ public class SocialMediaController {
         app.get("/messages/", this::getMessagesHandler);
         app.get("/messages/{message_id}", this::getMessageByIdHandler);
         app.delete("messages/{message_id}", this::deleteMessageHandler);
-        app.get("/accounts/{account_id}", this::getAllMessagesByUserHandler);
+        app.get("/accounts/{account_id}/messages", this::getAllMessagesByUserHandler);
         app.post("/register", this::addUserHandler);
         app.post("/login", this::loginHandler);
 
@@ -72,17 +70,18 @@ public class SocialMediaController {
      * @throws JsonProcessingException
      */
     private void updateMessageHandler(Context ctx) throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
-        Message message = mapper.readValue(ctx.body(), Message.class);
-        int message_id = Integer.parseInt(ctx.pathParam("message_id"));
-        String message_text = message.getMessage_text();
-        Message messageToUpdate = messageService.updateMessage(message_id, message_text);
+            ObjectMapper mapper = new ObjectMapper();
+            Message message = mapper.readValue(ctx.body(), Message.class);
+            int message_id = Integer.parseInt(ctx.pathParam("message_id"));
+            String message_text = message.getMessage_text();
+            Message messageToUpdate = messageService.updateMessage(message_id, message_text);
 
-        if ((messageToUpdate == null) || (message_id == 0)) {
-            ctx.status(400);        
-        } else {
-            ctx.json(mapper.writeValueAsString(messageToUpdate));
-        }
+            if ((messageToUpdate == null) || (message_id == 0)) {
+                ctx.status(400);        
+            } else {
+                ctx.json(mapper.writeValueAsString(messageToUpdate));
+                ctx.status(200);  
+            }
     }
 
     /**
@@ -134,14 +133,28 @@ public class SocialMediaController {
      * @throws JSONProcessingException
      */
     private void getAllMessagesByUserHandler(Context ctx) {
-        int posted_by = Integer.parseInt(ctx.pathParam("account_id"));
-        List <Message> messages = messageService.getMessagesByUser(posted_by);
-        // System.out.println("The messages are: " + messages);
+        // int posted_by = Integer.parseInt(ctx.pathParam("account_id"));
+        // List <Message> messages = messageService.getMessagesByUser(posted_by);
+        // // System.out.println("The messages are: " + messages);
+        // int sizeOfMessages = messages == null ? 0 : messages.size();
+        // // System.out.println("The messages are: " + foundMessages.size());
+        // if ((sizeOfMessages > 0) && !(messages == null)) {
+        //     ctx.json(messages);
+        // } else {
+        //     ctx.status(200);
+        // }
+        int message_id = Integer.parseInt(ctx.pathParam("posted_by"));
+        Message message = messageService.getMessagesById(message_id);
 
-        if (!(messages == null)) {
-            ctx.json(messages);
+        if (message == null) {
+            ctx.status(200);
+        } else {
+            // ctx.json(messageService.getMessagesById(message_id));
+            ctx.json(message);
+            ctx.status(200);
+
         }
-        ctx.status(200);
+        
         
     }
 
