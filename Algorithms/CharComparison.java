@@ -1,3 +1,4 @@
+package Algorithms;
 
 public class CharComparison {
     public static int compare(char[] a, char[] b) {
