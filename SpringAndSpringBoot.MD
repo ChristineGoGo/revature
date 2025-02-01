@@ -146,6 +146,19 @@ Introduction to Spring Framework
                 
                 Scopes
                     - Beans can have different scopes, such a singleton, prototype, request, session and more
+                    - A bean's scope determines how the bean behaves when that bean is requested from the ApplicationContext. Spring could be instructed to either perform a newly-instantiated object or reuse an existing object. Below are the Spring beans scopes:
+                        - Singleton
+                            The default scpoe, any time a specific bean is requested, the existine object it reused
+                        - Prototype
+                            Any time a bean is requested, a new object is instantiated
+                        - Request
+                            Only used in web applications. A new object is instantiated once per web session
+                        Session
+                            Only used in web applications. A new object is instantiated once per web session
+                        Application
+                            Only used in web applications. A new object is instantiated once per web servlet
+                        Websocket
+                            Only used in web applications. A new object is instantiated once per web socket
                 
                 Lifecycle Management
                     - Spring supports lifecycle callbacks for beans
@@ -248,5 +261,19 @@ Comparison of Spring Framework and Spring Boot
     It provides a wide range of features and functionalities            It includes embedded server support and seamless intergration with the
     for various aspects of application development                      Spring ecosystem
 
-    It requires developes to configure and manage many aspects          It is designed to be easy to use and quick to get started with becuase of
+    It requires developes to configure and manage many aspects          It is designed to be easy to use and quick to get started with because of
     of their applications manually                                      autoconfiguration
+
+
+SpringBoot offers the @PropertySource annotation as a convinient mechanism for adding property sources to the environment
+Property values can be injected directly into your beans using the @Value annotation
+
+Spring MVC Annotations
+    - @Controller
+     - It is similar to @Component. It provides additional information that a class is a controller
+    - @RequestMapping
+     - It can be used at the class level to specify a common base URL for all handler methods within that controller
+     - It can be used at the method level to further specify the URL pattern and HTTP Method for individual handler methods
+     - It provides attributes for configuring request mappings to further refine the mapping conditions
+    - @ResponseBody
+     - It is used to indicate that the return value of a controller method should be serialized directly to the HTTP response
