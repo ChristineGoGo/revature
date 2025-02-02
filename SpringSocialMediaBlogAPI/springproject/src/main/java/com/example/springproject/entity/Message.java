@@ -62,46 +62,70 @@ public class Message {
         this.timePostedEpoch = timePostedEpoch;
     }
 
+
+    /**
+     * getters and setters are needed for Jackson ObjectMapper to work
+     * @returrn messageId
+     */
     public Integer getMessageId() {
         return messageId;
     }
 
+    /**
+     * getters and setters are needed for Jackson ObjectMapper to work
+     * @param messageId
+     */
     public void setMessageId(Integer messageId) {
         this.messageId = messageId;
     }
+
+    /**
+     * getters and setters are needed for Jackson ObjectMapper to work
+     * @return postedBy
+     */
 
     public Integer getPostedBy() {
         return postedBy;
     }
 
+    /**
+     * getters and setters are needed for Jackson ObjectMapper to work
+     * @param postedBy
+     */
     public void setPostedBy(Integer postedBy) {
         this.postedBy = postedBy;
     }
 
+      /**
+     * getters and setters are needed for Jackson ObjectMapper to work
+     * @return messageText
+     */
     public String getMessageText() {
         return messageText;
     }
 
+    /**
+     * getters and setters are needed for Jackson ObjectMapper to work
+     * @param messageText
+     */
     public void setMessageText(String messageText) {
         this.messageText = messageText;
     }
 
+    /**
+     * getters and setters are needed for Jackson ObjectMapper to work
+     * @return timePostedEpoch
+     */
     public Long getTimePostedEpoch() {
         return timePostedEpoch;
     }
 
-    public void setTimePostedEpoch(Long timePostedEpoch) {
-        this.timePostedEpoch = timePostedEpoch;
-    }
-
     /**
      * getters and setters are needed for Jackson ObjectMapper to work
-     * @param
+     * @param timePostedEpoch
      */
-    
-   
-    
-  
-    
+    public void setTimePostedEpoch(Long timePostedEpoch) {
+        this.timePostedEpoch = timePostedEpoch;
+    }  
 
 }
