@@ -2,8 +2,16 @@ package com.revature.bootpie.Controllers;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -11,6 +19,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.revature.bootpie.models.Pie;
 import com.revature.bootpie.services.PieService;
+
+
 
 
 @Controller
@@ -31,12 +41,42 @@ public class PieController {
     }
 
     @GetMapping(params = "pieName")
-    public String getMethodName(@RequestParam String param) {
-        return new String();
+    public @ResponseBody ResponseEntity<Pie> findPie(@RequestParam String pieName) {
+        return new ResponseEntity<>(pieService.findPie(pieName), HttpStatus.ACCEPTED);
+    }
+
+    @GetMapping("calories/{limit}")
+    public @ResponseBody ResponseEntity<List<Pie>> findPiesByCalories(@PathVariable int limit) {
+        List<Pie> caloriePieList = pieService.getPieByCalories(limit);
+        return new ResponseEntity<>(caloriePieList, HttpStatus.ACCEPTED);
     }
     
+    @DeleteMapping("delete/{pieName}")
+    public @ResponseBody ResponseEntity<String> deletePie(@PathVariable String pieName) {
+        pieService.deletePie(pieName);
+        return ResponseEntity.accepted().body("Successfully deleted");
+    }
 
+    @PatchMapping("/patch")
+    public @ResponseBody ResponseEntity<String> patchPie(@RequestParam String pieName, 
+                                                            @RequestParam(defaultValue="0", required=false) int calories, 
+                                                            @RequestParam(defaultValue="0", required=false) int slicesAvailable) 
+    {
 
+        pieService.patchPie(pieName, calories, slicesAvailable);
+        return ResponseEntity.ok().body("Pie successfully patched!");
+    }
 
+    @PutMapping("update")
+    public @ResponseBody ResponseEntity<String> updatePie(@RequestBody Pie updatPie) {
+        pieService.updatePie(updatPie);        
+        return ResponseEntity.ok().body("Pie successfuly updated");
+    }
+
+    @PostMapping("create")
+    public @ResponseBody ResponseEntity<Pie> createPie(@RequestBody Pie newPie) {
+        pieService.addNewPie(newPie);
+        return ResponseEntity.status(HttpStatus.CREATED).body(newPie);
+    }
      
 }
