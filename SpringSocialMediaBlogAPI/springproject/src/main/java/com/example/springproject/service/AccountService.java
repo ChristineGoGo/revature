@@ -36,7 +36,9 @@ public class AccountService {
      * @param password
      * @return account ofr the user
      */
-    public Account login(String username, String password) {
+    public Account userLogin(Account account) {
+        String username = account.getUsername();
+        String password = account.getPassword();
         Optional<Account> optionalAccount = accountRepository.findByUsernameAndPassword(username, 
                                                                                         password);
         if (optionalAccount.isPresent()) {
@@ -45,6 +47,18 @@ public class AccountService {
             return null;
         }
         
+    }
+
+    /**
+     * find a user in the database
+     * @param account
+     */
+    public Account findUser(String username) {
+        Optional<Account> optionalAccount = accountRepository.findByUsername(username);
+        if (optionalAccount.isPresent()) {
+            return optionalAccount.get();
+        }
+        return null;
     }
 
     

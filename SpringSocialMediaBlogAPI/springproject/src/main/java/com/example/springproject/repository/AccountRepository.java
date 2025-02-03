@@ -8,4 +8,5 @@ import com.example.springproject.entity.Account;
 
 public interface AccountRepository extends  CrudRepository<Account, Integer> {
     Optional<Account> findByUsernameAndPassword(String username, String password);
+    Optional<Account> findByUsername(String username);
 }
