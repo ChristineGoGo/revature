@@ -50,15 +50,15 @@ public class Message {
     /**
      * when retrieving message from the database all fields are neccessary
      * @param message_id
-     * @param messageText
-     * @param postedBy
-     * @param timePostedEpoch
+     * @param message_text
+     * @param posted_by
+     * @param time_posted_epoch
      */
-    public Message(Integer message_id, String messageText, Integer postedBy, Long timePostedEpoch) {
+    public Message(Integer message_id, String message_text, Integer posted_by, Long time_posted_epoch) {
         this.message_id = message_id;
-        this.messageText = messageText;
-        this.postedBy = postedBy;
-        this.timePostedEpoch = timePostedEpoch;
+        this.message_text = message_text;
+        this.posted_by = posted_by;
+        this.time_posted_epoch = time_posted_epoch;
     }
 
 
@@ -84,15 +84,15 @@ public class Message {
      */
 
     public Integer getPostedBy() {
-        return postedBy;
+        return posted_by;
     }
 
     /**
      * getters and setters are needed for Jackson ObjectMapper to work
      * @param postedBy
      */
-    public void setPostedBy(Integer postedBy) {
-        this.postedBy = postedBy;
+    public void setPostedBy(Integer posted_by) {
+        this.posted_by = posted_by;
     }
 
       /**
@@ -100,15 +100,15 @@ public class Message {
      * @return messageText
      */
     public String getMessageText() {
-        return messageText;
+        return message_text;
     }
 
     /**
      * getters and setters are needed for Jackson ObjectMapper to work
      * @param messageText
      */
-    public void setMessageText(String messageText) {
-        this.messageText = messageText;
+    public void setMessageText(String message_text) {
+        this.message_text = message_text;
     }
 
     /**
@@ -116,15 +116,15 @@ public class Message {
      * @return timePostedEpoch
      */
     public Long getTimePostedEpoch() {
-        return timePostedEpoch;
+        return time_posted_epoch;
     }
 
     /**
      * getters and setters are needed for Jackson ObjectMapper to work
      * @param timePostedEpoch
      */
-    public void setTimePostedEpoch(Long timePostedEpoch) {
-        this.timePostedEpoch = timePostedEpoch;
+    public void setTimePostedEpoch(Long time_posted_epoch) {
+        this.time_posted_epoch = time_posted_epoch;
     }  
 
 }
