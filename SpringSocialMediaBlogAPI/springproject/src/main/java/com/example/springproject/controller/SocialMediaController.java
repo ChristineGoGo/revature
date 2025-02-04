@@ -5,7 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,8 +28,8 @@ import com.example.springproject.service.MessageService;
 public class SocialMediaController {
 
     @Autowired
-    private MessageService messageService;
-    private AccountService accountService;
+    private final MessageService messageService;
+    private final AccountService accountService;
 
     /**
      * initialize constructor to utilize the Service package
@@ -108,6 +111,26 @@ public class SocialMediaController {
 
     /**
      * delete a message from the database
+     * @param message_id
+     * @return 200 response regardless of message existance/non existance 
+     * and deleted message
      */
+    @DeleteMapping("messages/{message_id}")
+    public @ResponseBody ResponseEntity<Message> deleteMessage(@PathVariable int message_id) {
+        Message messageToDelete = messageService.getMessageById(message_id);
+        if (!(messageToDelete == null)) {
+            messageService.deleteMessage(message_id);
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(messageToDelete);
+    }
+
+    /**
+     * update the message text of a message given its message id
+     * @param message_id
+     * @return updated message
+     */
+    @PatchMapping("messages/{message_id}")
+
+
     
 }

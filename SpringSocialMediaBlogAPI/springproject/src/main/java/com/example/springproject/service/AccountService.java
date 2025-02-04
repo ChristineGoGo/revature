@@ -10,8 +10,9 @@ import com.example.springproject.repository.AccountRepository;
 
 @Service
 public class AccountService {
-    AccountRepository accountRepository;
     @Autowired
+    AccountRepository accountRepository;
+    
 
     /**
      * define a constructor to initialize the accountRepository
