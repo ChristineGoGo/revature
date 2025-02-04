@@ -70,7 +70,7 @@ public class SocialMediaController {
      * @return account record in the database
      */
     @PostMapping("login")
-    public @ResponseBody ResponseEntity<Account> userLogin(@RequestParam Account account) {
+    public @ResponseBody ResponseEntity<Account> userLogin(@RequestBody Account account) {
         if (accountService.userLogin(account) == null)
             return ResponseEntity.status(401).body(account);                                                                
         return ResponseEntity.status(HttpStatus.OK).body(account);
@@ -130,6 +130,26 @@ public class SocialMediaController {
      * @return updated message
      */
     @PatchMapping("messages/{message_id}")
+    public @ResponseBody ResponseEntity<Message> patchMessage(@PathVariable int message_id, @RequestParam String message_text ) {
+        Message messageToPatch = messageService.getMessageById(message_id);
+        if (!(messageToPatch == null) && message_text.length() > 0 && message_text.length() < 255) {
+            messageService.updateMessage(message_id, message_text);
+            return ResponseEntity.status(HttpStatus.OK).body(messageToPatch);
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+    }
+
+    /**
+     * get all message from a user given their id
+     * @param account id
+     * @return list of messages by a particular user
+     */
+    @GetMapping("accounts/{account_id}/messages}")
+    public @ResponseBody ResponseEntity<Message> getMessageByUser(@PathVariable int account_id) {
+        Message messages = accountService.getUserMessages(account_id);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(messages);
+    }
+    
 
 
     

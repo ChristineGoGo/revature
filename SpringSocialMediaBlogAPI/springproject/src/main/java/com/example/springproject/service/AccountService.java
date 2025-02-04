@@ -6,20 +6,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.springproject.entity.Account;
+import com.example.springproject.entity.Message;
 import com.example.springproject.repository.AccountRepository;
+import com.example.springproject.repository.MessageRepository;
 
 @Service
 public class AccountService {
     @Autowired
     AccountRepository accountRepository;
+    MessageRepository messageRepository;
+
     
 
     /**
      * define a constructor to initialize the accountRepository
      * @param accountRepository
      */
-    public AccountService(AccountRepository accountRepository) {
+    public AccountService(AccountRepository accountRepository, MessageRepository messageRepository) {
         this.accountRepository = accountRepository;
+        this.messageRepository = messageRepository;
     }
 
     /**
@@ -58,6 +63,19 @@ public class AccountService {
         Optional<Account> optionalAccount = accountRepository.findByUsername(username);
         if (optionalAccount.isPresent()) {
             return optionalAccount.get();
+        }
+        return null;
+    }
+
+    /**
+     * find all the messages by a particular user
+     * @param user_id/ posted_by
+     * @return all the user messages
+     */
+    public Message getUserMessages(int user_id) {
+        Optional<Message> optionalMessage = messageRepository.findByPostedBy(user_id);
+        if (optionalMessage.isPresent()) {
+            return optionalMessage.get();
         }
         return null;
     }
