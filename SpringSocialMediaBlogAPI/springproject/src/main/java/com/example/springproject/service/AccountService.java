@@ -1,5 +1,7 @@
 package com.example.springproject.service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +35,8 @@ public class AccountService {
      * @param password
      */
     public Account registerAccount(Account account) {
-        return accountRepository.save(account);
+        Account newAccount = new Account(account.getPassword(), account.getUsername());
+        return accountRepository.save(newAccount);
     }
 
     /**
@@ -72,12 +75,11 @@ public class AccountService {
      * @param user_id/ posted_by
      * @return all the user messages
      */
-    public Message getUserMessages(int user_id) {
-        Optional<Message> optionalMessage = messageRepository.findByPostedBy(user_id);
-        if (optionalMessage.isPresent()) {
-            return optionalMessage.get();
-        }
-        return null;
+    public List<Message> getUserMessages(int user_id) {
+        List<Message> messages = new ArrayList<>(messageRepository.findByPostedBy(user_id));
+
+        if (messages.isEmpty()) return null;
+        return messages;
     }
 
     

@@ -13,11 +13,10 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name="account")
 public class Account {
-    @Column(name="accountId")
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-
-    private Integer accountId;
+    @Column(name="account_id")
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer account_id;
+    
     private String username;
     private String password;
 
@@ -41,8 +40,8 @@ public class Account {
      * @param String password
      * @param String username
      */
-    public Account(Integer accountId, String password, String username) {
-        this.accountId = accountId;
+    public Account(Integer account_id, String password, String username) {
+        this.account_id = account_id;
         this.password = password;
         this.username = username;
     }
@@ -53,7 +52,7 @@ public class Account {
      */
 
     public Integer getAccountId() {
-        return accountId;
+        return account_id;
     }
 
     /**
@@ -61,8 +60,8 @@ public class Account {
      * @param accountId
      */
 
-    public void setAccountId(Integer accountId) {
-        this.accountId = accountId;
+    public void setAccountId(Integer account_id) {
+        this.account_id = account_id;
     }
 
     /**

@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,7 +31,7 @@ public class SocialMediaController {
     private final AccountService accountService;
 
     /**
-     * initialize constructor to utilize the Service package
+     * initialize constructor to utilize the Service packages
      * @param messageService
      * @param accountService
      */
@@ -53,8 +52,8 @@ public class SocialMediaController {
     @PostMapping("register")
     public @ResponseBody ResponseEntity<Account> registerAccount(@RequestBody Account newAccount)
     {
-        Account accountToBeadded = accountService.findUser(newAccount.getUsername());
-        if (!(accountToBeadded == null)) {
+        Account accountToBeAdded = accountService.findUser(newAccount.getUsername());
+        if (!(accountToBeAdded == null)) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(newAccount);
         } else if (newAccount.getUsername().length() == 0 || newAccount.getPassword().length() < 4) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(newAccount);
@@ -93,7 +92,7 @@ public class SocialMediaController {
     /**
      * @return list of all the messages in the database
      */
-    @RequestMapping("messages")
+    @GetMapping("messages")
     public @ResponseBody List<Message> getMessages() {
         return messageService.getMessages();
     }
@@ -140,17 +139,14 @@ public class SocialMediaController {
     }
 
     /**
-     * get all message from a user given their id
+     * get all messages from a user given their id
      * @param account id
      * @return list of messages by a particular user
      */
-    @GetMapping("accounts/{account_id}/messages}")
-    public @ResponseBody ResponseEntity<Message> getMessageByUser(@PathVariable int account_id) {
-        Message messages = accountService.getUserMessages(account_id);
+    @GetMapping("accounts/{account_id}/messages")
+    public @ResponseBody ResponseEntity<List<Message>> getMessageByUser(@PathVariable int account_id) {
+        List<Message> messages = accountService.getUserMessages(account_id);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(messages);
     }
-    
-
-
     
 }

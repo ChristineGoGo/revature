@@ -7,28 +7,27 @@ import jakarta.persistence.Id;
 
 @Entity
 public class Message {
-    @Column (name="messageId")
+    @Column (name="message_id")
     @Id @GeneratedValue
-
-    private Integer messageId;
+    private Integer message_id;
     /**
      * id for the message posted by a specific user. Let's assume it is posted by
      * the front end
      */
-    @Column (name="postedBy")
-    private Integer postedBy;
+    @Column (name="posted_by")
+    private Integer posted_by;
 
     /**
      * text for the message.It should not be blank
      */
-    @Column (name="messageText")
-    private String messageText;
+    @Column (name="message_text")
+    private String message_text;
 
     /**
      * the epoch time is when this tweet was posted. Assume it is provided by the front end
      */
-    @Column (name="timePostedEpoch")
-    private Long timePostedEpoch;
+    @Column (name="time_posted_epoch")
+    private Long time_posted_epoch;
 
     /**
      * default no-args constructor
@@ -42,21 +41,21 @@ public class Message {
      * @param postedBy
      * @param timePostedEpoch
     */
-    public Message(String messageText, Integer postedBy, Long timePostedEpoch) {
-        this.messageText = messageText;
-        this.postedBy = postedBy;
-        this.timePostedEpoch = timePostedEpoch;
+    public Message(String message_text, Integer posted_by, Long time_posted_epoch) {
+        this.message_text = message_text;
+        this.posted_by = posted_by;
+        this.time_posted_epoch = time_posted_epoch;
     }
     
     /**
      * when retrieving message from the database all fields are neccessary
-     * @param messageId
+     * @param message_id
      * @param messageText
      * @param postedBy
      * @param timePostedEpoch
      */
-    public Message(Integer messageId, String messageText, Integer postedBy, Long timePostedEpoch) {
-        this.messageId = messageId;
+    public Message(Integer message_id, String messageText, Integer postedBy, Long timePostedEpoch) {
+        this.message_id = message_id;
         this.messageText = messageText;
         this.postedBy = postedBy;
         this.timePostedEpoch = timePostedEpoch;
@@ -65,18 +64,18 @@ public class Message {
 
     /**
      * getters and setters are needed for Jackson ObjectMapper to work
-     * @returrn messageId
+     * @returrn message_id
      */
     public Integer getMessageId() {
-        return messageId;
+        return message_id;
     }
 
     /**
      * getters and setters are needed for Jackson ObjectMapper to work
-     * @param messageId
+     * @param message_id
      */
-    public void setMessageId(Integer messageId) {
-        this.messageId = messageId;
+    public void setMessageId(Integer message_id) {
+        this.message_id = message_id;
     }
 
     /**
