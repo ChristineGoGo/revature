@@ -13,9 +13,9 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name="account")
 public class Account {
-    @Column(name="account_id")
+    @Column(name="accountId")
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer account_id;
+    private Integer accountId;
     
     private String username;
     private String password;
@@ -36,12 +36,12 @@ public class Account {
     /**
      * for retrieving a new account from the database
      * all the fields are needed
-     * @param int accountId
-     * @param String password
-     * @param String username
+     * @param accountId
+     * @param password
+     * @param username
      */
-    public Account(Integer account_id, String password, String username) {
-        this.account_id = account_id;
+    public Account(Integer accountId, String password, String username) {
+        this.accountId = accountId;
         this.password = password;
         this.username = username;
     }
@@ -52,7 +52,7 @@ public class Account {
      */
 
     public Integer getAccountId() {
-        return account_id;
+        return accountId;
     }
 
     /**
@@ -60,8 +60,8 @@ public class Account {
      * @param accountId
      */
 
-    public void setAccountId(Integer account_id) {
-        this.account_id = account_id;
+    public void setAccountId(Integer accountId) {
+        this.accountId = accountId;
     }
 
     /**

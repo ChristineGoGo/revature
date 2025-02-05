@@ -9,5 +9,5 @@ import com.example.springproject.entity.Message;
 
 @Repository
 public interface MessageRepository extends JpaRepository<Message, Integer>{
-    List<Message> findByPostedBy(int posted_by);
+    List<Message> findByPostedBy(int postedBy);
 }

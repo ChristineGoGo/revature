@@ -3,7 +3,6 @@ package com.example.springproject.service;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.springproject.entity.Account;
@@ -15,7 +14,7 @@ import com.example.springproject.repository.MessageRepository;
 public class MessageService {
     private final MessageRepository messageRepository;
     private final AccountRepository accountRepository;
-    @Autowired
+    // @Autowired
     public MessageService(MessageRepository messageRepository, AccountRepository accountRepository) {
         this.messageRepository = messageRepository;
         this.accountRepository = accountRepository;
@@ -36,12 +35,12 @@ public class MessageService {
     }
 
     /**
-     * get all the messages in the database according to the message_id
-     * @param message_id
+     * get all the messages in the database according to the message id
+     * @param messageId
      * @return List<Messages>
      */
-    public Message getMessageById(int message_id) {
-        Optional<Message> optionalMessage = messageRepository.findById(message_id);
+    public Message getMessageById(int messageId) {
+        Optional<Message> optionalMessage = messageRepository.findById(messageId);
         if (optionalMessage.isPresent()) {
             return optionalMessage.get();
         }
@@ -53,22 +52,22 @@ public class MessageService {
      * @param message
      * @return
      */
-    public void deleteMessage(int message_id) {
-        messageRepository.deleteById(message_id);
+    public void deleteMessage(int messageId) {
+        messageRepository.deleteById(messageId);
     }
 
     /**
-     * modify the message_text in the database given its id
+     * modify the messagetext in the database given its id
      * and the message to modify to
-     * @param message_id
-     * @param message_text
+     * @param messageId
+     * @param messageText
      * @return
      */
-    public void updateMessage(int message_id, String message_text) {
-        Optional<Message> optionalMessage = messageRepository.findById(message_id);
+    public void updateMessage(int messageId, String messageText) {
+        Optional<Message> optionalMessage = messageRepository.findById(messageId);
         if (optionalMessage.isPresent()) {
             Message message = optionalMessage.get();
-            message.setMessageText(message_text);
+            message.setMessageText(messageText);
             messageRepository.save(message);
         }
     }
